@@ -14,7 +14,7 @@ const blogSchema = new mongoose.Schema({
 
 const Blog = mongoose.model('Blog', blogSchema)
 
-
+app.use(mongoose)
 mongoose.connect(url)
 	.then(result => {
 		console.log('connected to MongoDB')
