@@ -1,14 +1,4 @@
 const listHelper = require('../utils/list_helper')
-
-test('dummy returns one', () => {
-  const blogs = []
-
-  const result = listHelper.dummy(blogs)
-  expect(result).toBe(1)
-})
-
-describe('total likes', () => {
-  
 const listBlogs = [
   {
     _id: "5a422a851b54a676234d17f7",
@@ -59,7 +49,8 @@ const listBlogs = [
     __v: 0
   }  
 ]
-    const listEmpty = []
+
+const listEmpty = []
 const listWithOneBlog = [
 {
     _id: '5a422aa71b54a676234d17f8',
@@ -70,6 +61,16 @@ const listWithOneBlog = [
     __v: 0
 }
 ]
+test('dummy returns one', () => {
+  const blogs = []
+
+  const result = listHelper.dummy(blogs)
+  expect(result).toBe(1)
+})
+
+describe('total likes', () => {
+  
+
 
   test('when list has only one blog, equals the likes of that', () => {
     
@@ -87,4 +88,18 @@ const listWithOneBlog = [
     const result = listHelper.totalLikes(listBlogs)
     expect(result).toBe(36)
 }) 
+})
+
+
+describe ('favorite Blog', () => {
+
+
+test('of a bigger list is calculated right', () => {
+
+    const result = listHelper.favoriteBlog(listBlogs)
+    expect(result).toBe(12)
+
+
+
+})
 })
