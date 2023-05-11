@@ -47,3 +47,9 @@ test('a specific blog in returned blogs', async () => {
 afterAll(async () => {
   await mongoose.connection.close()
 })
+
+test('id exists', async() => {
+
+  const response =  await api.get('/api/blogs')
+  response.body.forEach(blog => expect(blog.id).toBeDefined())
+})
