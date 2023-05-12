@@ -3,7 +3,7 @@ const supertest = require('supertest')
 const app = require('../../app')
 const Blog = require('../../models/blog')
 const api = supertest(app)
-
+const helper = require('../list_helper.js')
 
 
 const initialBlogs = [
@@ -64,9 +64,7 @@ test('a specific blog in returned blogs', async () => {
 
 }, 100000)
 
-afterAll(async () => {
-  await mongoose.connection.close()
-})
+
 
 test('id exists', async() => {
 
@@ -92,4 +90,30 @@ await api
 const response = await api.get('/api/blogs')
 
 expect(response.body).toHaveLength(initialBlogs.length + 1)
+})
+
+
+describe('deletion of a blog', () => {
+   test('succeeds with status code 204 if id is valid', async () => {
+    const response = await api.get('/api/blogs')
+
+    await api
+      .delete(`/api/blogs/${response.body.find(blog => blog.id).id}`)
+      .expect(204)
+    
+    
+  const response_after_delete = await api.get('/api/blogs')
+  expect(response_after_delete.body).toHaveLength(initialBlogs.length-1)
+    
+   })
+
+
+})
+
+
+
+
+
+afterAll(async () => {
+  await mongoose.connection.close()
 })
