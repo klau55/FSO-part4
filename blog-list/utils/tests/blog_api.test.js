@@ -106,9 +106,32 @@ describe('deletion of a blog', () => {
   expect(response_after_delete.body).toHaveLength(initialBlogs.length-1)
     
    })
-
-
 })
+describe('editing of a blog', () => {
+  test('blog can be edited', async() => {
+    const response = await api.get('/api/blogs')
+    const initialBlog = response.body.find(blog => blog.id)
+    const changedBlog = {
+      title: initialBlog.title,
+      author: initialBlog.author,
+      url: initialBlog.url,
+      likes: 999
+    }
+
+    await api
+      .put(`/api/blogs/${initialBlog.id}`)
+      .send(changedBlog)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+  
+    expect(changedBlog.likes).toBe(999)
+  
+  })
+
+
+   })
+
+
 
 
 
